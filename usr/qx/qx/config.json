@@ -1,0 +1,21 @@
+{
+  "name"    : "qx",
+
+  "include" :
+  [
+    {
+      "path" : "../qooxdoo-0.8-sdk/tool/data/config/application.json"
+    }
+  ],
+
+  "let" :
+  {
+    "APPLICATION"  : "qx",
+    "QOOXDOO_PATH" : "../qooxdoo-0.8-sdk/framework",
+    "QOOXDOO_URI"  : "../${QOOXDOO_PATH}",
+    "QXTHEME"      : "qx.theme.Modern",
+    "API_EXCLUDE"  : ["qx.legacy.*"],
+    "LOCALES"      : [ "en" ],
+    "ROOT"         : "."
+  }
+}

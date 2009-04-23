@@ -1,0 +1,155 @@
+{
+  "include" :
+  [
+    {
+      "path" : "../tool/data/config/application.json",
+      "as"   : "appconf"
+    },
+
+    {
+      "path" : "image.json"
+    }
+  ],
+
+  "let" :
+  {
+    "APPLICATION"  : "qx",
+    "QOOXDOO_PATH" : ".",
+    "QOOXDOO_URI"  : "../${QOOXDOO_PATH}",
+    "API_EXCLUDE"  : ["qx.legacy.*", "qx.test.*"],
+    "CACHE"        : "../cache"
+  },
+
+  "jobs":
+  {
+    "source" :
+    {
+      "extend" : ["appconf::source"],
+      "include": ["qx.*"]
+    },
+
+    "build" :
+    {
+      "library" :
+      [
+        {
+          "manifest" : "Manifest.json",
+          "uri"      : ".."
+        }
+      ],
+
+      "cache"  : { "compile" : "${CACHE}" },
+
+      "include": ["qx.*"],
+      "exclude": ["=qx.legacy.*"],
+
+      "variants" :
+      {
+        "qx.debug" : ["on"],
+        "qx.aspects" : ["off"]
+      },
+
+      // Static application class (which is not included in build)
+      "settings" :
+      {
+        "qx.application" : "Application"
+      },
+
+      "compile-dist" :
+      {
+        "target"   : "build",
+        "file"     : "build/script/qx.js",
+        "uri"      : "script/qx.js",
+        "format"   : "on",
+        "optimize" : ["basecalls", "variables", "privates", "strings"],
+        "root"     : "build"
+      },
+
+      "copy-resources" :
+      {
+        "target" : "build"
+      }
+    },
+
+    "publish-api" :
+    {
+      "shell" :
+      {
+        "command" : "rsync --checksum --compress --recursive --delete --inplace --links --safe-links --exclude .svn api/* root@qooxdoo.org:/var/www/qooxdoo/demo/0.8/apiviewer"
+      }
+    },
+
+    "publish-test" :
+    {
+      "shell" :
+      {
+        "command" : "rsync --checksum --compress --recursive --delete --inplace --links --safe-links --exclude .svn test/* root@qooxdoo.org:/var/www/qooxdoo/demo/0.8/testrunner"
+      }
+    },
+
+    "publish-framework" :
+    {
+      "run" :
+      [
+        "publish-api",
+        "publish-test"
+      ]
+    },
+
+    "test" :
+    {
+      "extend" : ["appconf::test"],
+
+      "let" :
+      {
+        "LOCALES" : ["de", "de_DE", "en", "en_GB"]
+      }
+    },
+
+    "test-source" :
+    {
+      "extend" : ["appconf::test-source"],
+
+      "let" :
+      {
+        "LOCALES" : ["de", "de_DE", "en", "en_GB"]
+      }
+    },
+
+    "images" :
+    {
+      "run" : [ "image-clipping", "image-combine" ]
+    },
+
+    "api" :
+    {
+      "extend" : ["appconf::api"]
+    },
+
+    "clean" :
+    {
+      "extend" : ["appconf::clean"]
+    },
+
+    "distclean" :
+    {
+      "extend" : ["appconf::distclean"]
+    },
+
+    "fix" :
+    {
+      "extend" : ["appconf::fix"]
+    },
+
+    "lint" :
+    {
+      "extend" : ["appconf::lint"]
+    },
+
+    "translate" :
+    {
+      "include": [],
+      "extend" : ["appconf::translate"]
+    }
+  }
+}
