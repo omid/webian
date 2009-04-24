@@ -25,7 +25,6 @@ require_once('event_list.php');
 
 @session_start();
 if(strpos($_SERVER['SCRIPT_NAME'], 'loader.php') === false){ session_destroy(); }
-@session_start();
 header('Content-type: application/javascript');
 
 ///////// INITIALIZED FUNCTIONS

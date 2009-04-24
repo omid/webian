@@ -33,7 +33,7 @@ class libx
         $id = substr($id, strpos($id, '_') + 1);
         
         // generate a new ID in session
-        $gid = ++$_SESSION['xids'][$id];
+        @$gid = ++$_SESSION['xids'][$id];
         $this->_id = $id . $gid;
         
         // add element's ID to JS

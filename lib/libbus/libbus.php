@@ -23,7 +23,7 @@ class libbus
         $id = substr($id, strpos($id, '_') + 1);
         
         // generate a new ID in session
-        $gid = ++$_SESSION['busids'][$id];
+        @$gid = ++$_SESSION['busids'][$id];
         $this->_id = $id . $gid;
         
         // add element's ID to JS

@@ -94,7 +94,7 @@ include_once('etc/main_config.php');
         $submenu = $menu . preg_replace('/\s/', '', strtolower($name));
         
         // add command and optional shortcut
-        if(!$params['shortcut']){
+        if(!isset($params['shortcut']) || !$params['shortcut']){
             $params['shortcut'] = '';
         }
         
