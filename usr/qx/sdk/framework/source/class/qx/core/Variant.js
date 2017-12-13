@@ -43,7 +43,7 @@
  * debugging code from the build version. It is very similar to conditional
  * compilation in C/C++.
  *
- * Here is a list of pre-defined variant names, the possilbe values they take,
+ * Here is a list of pre-defined variant names, the possible values they take,
  * and their system default:
  * <table>
  *  <tr>
